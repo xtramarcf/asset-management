@@ -1,0 +1,31 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: database
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      app: database
+  template:
+    metadata:
+      labels:
+        app: database
+    spec:
+      containers:
+        - name: database
+          image: xtramarcf/asset_management:database
+          env:
+            - name: POSTGRES_PASSWORD
+              value: "CXtkhXw96xMQm8"
+            - name: POSTGRES_USER
+              value: "postgres"
+            - name: POSTGRES_DB
+              value: "assetmanagement"
+          volumeMounts:
+            - mountPath: /var/backups
+              name: backup-volume
+      volumes:
+        - name: backup-volume
+          hostPath:
+            path: /var/backups

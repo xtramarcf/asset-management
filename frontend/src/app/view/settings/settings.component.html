@@ -1,0 +1,54 @@
+<!--Navbar-->
+<app-headnav/>
+<div class="container">
+  <h2 class="mt-4 mb-3">Settings</h2>
+  <div class="card mb-4">
+    <div class="card-header">
+      Users
+    </div>
+    <!--Table with all users-->
+    <div class="card-body">
+      <table class="table table-striped">
+        <caption>Users</caption>
+        <thead>
+        <tr>
+          <th>Username</th>
+          <th>First Name</th>
+          <th>Last Name</th>
+          <th>Enabled</th>
+          <th>Delete</th>
+        </tr>
+        </thead>
+        <tbody>
+          @for (user of users$ | async; track user.userName) {
+            <tr>
+              <td>{{ user.userName }}</td>
+              <td>{{ user.firstName }}</td>
+              <td>{{ user.lastName }}</td>
+              <!--Button for enabling users. Is only displayed, if the user is not enabled yet.-->
+              <td>
+                <ng-container *ngIf="user.enabled; else enableButton">
+                  Active
+                </ng-container>
+                <ng-template #enableButton>
+                  <button class="btn btn-primary" (click)="enableUser(user.userName)">Enable</button>
+                </ng-template>
+              </td>
+              <!--Button for deleting users. Does not show a button for deleting the Admin-->
+              <td>
+                <button class="btn btn-danger" *ngIf="user.userName !== 'Admin'" (click)="deleteUser(user.userName)">
+                  Delete
+                </button>
+              </td>
+            </tr>
+            <!--Is displayed, if no user is found. Should not appear, because the admin user should always exist.-->
+          } @empty {
+            <tr>
+              <td colspan="4" style="text-align: center">No users found</td>
+            </tr>
+          }
+        </tbody>
+      </table>
+    </div>
+  </div>
+</div>

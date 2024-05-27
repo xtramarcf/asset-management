@@ -1,0 +1,32 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: backend
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      app: backend
+  template:
+    metadata:
+      labels:
+        app: backend
+    spec:
+      containers:
+        - name: backend
+          ports:
+            - containerPort: 8080
+          image: xtramarcf/asset_management:backend_cicd
+          env:
+            - name: SPRING_DATASOURCE_URL
+              value: "jdbc:postgresql://database:5432/assetmanagement"
+            - name: SPRING_DATASOURCE_USERNAME
+              value: "postgres"
+            - name: SPRING_DATASOURCE_PASSWORD
+              value: "CXtkhXw96xMQm8"
+            - name: KEY_ADMIN-PASSWORD
+              value: "password123456"
+            - name: FRONTEND_URL
+              value: "frontend"
+            - name: FRONTEND_PORT
+              value: "4200"
