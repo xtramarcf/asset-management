@@ -17,13 +17,9 @@ jobs:
     runs-on: self-hosted
     name: Compile project
     steps:
-      - name: Login to DockerHub
-        run: |
-          sudo chmod 666 /var/run/docker.sock
-          docker login --username ${{ secrets.DOCKERHUB_USERNAME }} --password ${{ secrets.DOCKERHUB_PASSWORD }}
+#      - name: Login to DockerHub
 #        uses: docker/login-action@v3
 #        with:
-#          registry: https://hub.docker.com/
 #          username: ${{ secrets.DOCKERHUB_USERNAME }}
 #          password: ${{ secrets.DOCKERHUB_TOKEN }}
 
@@ -50,6 +46,7 @@ jobs:
     steps:
       - name: Run PostgreSQL Docker container
         run: |
+          sudo chmod 666 /var/run/docker.sock
           docker stop postgres-test || true
           docker rm postgres-test || true
           docker run -d \
@@ -127,11 +124,11 @@ jobs:
           sudo chmod +x mvnw
           ./mvnw clean package
 
-      - name: Login to DockerHub
-        uses: docker/login-action@v3
-        with:
-          username: ${{ secrets.DOCKERHUB_USERNAME }}
-          password: ${{ secrets.DOCKERHUB_PASSWORD }}
+#      - name: Login to DockerHub
+#        uses: docker/login-action@v3
+#        with:
+#          username: ${{ secrets.DOCKERHUB_USERNAME }}
+#          password: ${{ secrets.DOCKERHUB_PASSWORD }}
 
       - name: Build & Push to DockerHub
         uses: docker/build-push-action@v5
