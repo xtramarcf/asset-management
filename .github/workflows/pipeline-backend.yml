@@ -30,7 +30,8 @@ jobs:
 
       - name: Compile project
         run: |
-          ./mvnw clean compile
+          cd backend
+          sudo ./mvnw clean compile
 
   start-test-db:
     runs-on: self-hosted
@@ -42,7 +43,7 @@ jobs:
           docker stop postgres-test || true
           docker rm postgres-test || true
           docker run -d \
-            --name postgres-sql-bsn-test \
+            --name postgres-test \
             -e POSTGRES_USER=username \
             -e POSTGRES_PASSWORD=password \
             -e POSTGRES_DB=postgres \
