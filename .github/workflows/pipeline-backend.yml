@@ -31,7 +31,7 @@ jobs:
       - name: Compile project
         run: |
           cd backend
-          sudo ./mvnw clean compile
+          ./mvnw clean compile
 
   start-test-db:
     runs-on: self-hosted
