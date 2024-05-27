@@ -21,10 +21,10 @@ services:
       - "8080:8080"
     container_name: backend
 
-  frontend:
-    image: xtramarcf/asset_management:frontend
-    depends_on:
-      - backend
-    ports:
-      - "4200:4200"
-    container_name: frontend
+#  frontend:
+#    image: xtramarcf/asset_management-fe:1.0.0
+#    depends_on:
+#      - backend
+#    ports:
+#      - "4200:4200"
+#    container_name: frontend

@@ -1,0 +1,156 @@
+name: Pipeline backend
+
+#Trigg
+on:
+  push:
+    branches:
+      - master
+    paths:
+      - backend/**
+      - docker/backend/**
+      - 'docker-compose.yml'
+      - .github/workflows/*-backend.yml
+
+
+jobs:
+  compile:
+    runs-on: self-hosted
+    name: Compile project
+    steps:
+      - name: Checkout code
+        uses: actions/checkout@v4
+        with:
+          fetch-depth: 0
+
+      - name: Setup JDK
+        uses: actions/setup-java@v4
+        with:
+          java-version: 17
+          distribution: 'corretto'
+
+      - name: Compile project
+        run: |
+          cd backend
+          ./mvnw clean compile
+
+  start-test-progress:
+    runs-on: self-hosted
+    name: Start test db
+    steps:
+      - name: Run PostgreSQL Docker container
+        run: |
+          sudo chmod 666 /var/run/docker.sock
+          docker stop postgres-test || true
+          docker rm postgres-test || true
+          docker run -d \
+            --name postgres-sql-bsn-test \
+            -e POSTGRES_USER=username \
+            -e POSTGRES_PASSWORD=password \
+            -e POSTGRES_DB=postgres \
+            -p 5432:5432 \
+            --restart unless-stopped \
+            postgres
+
+  unit-tests:
+    runs-on: self-hosted
+    name: Unit tests
+    needs: [ start-test-process ]
+    steps:
+      - name: Checkout code
+        uses: actions/checkout@v4
+        with:
+          fetch-depth: 0
+
+      - name: Setup JDK
+        uses: actions/setup-java@v4
+        with:
+          java-version: 17
+          distribution: 'corretto'
+
+      - name: Running unit Tests
+        run: |
+          cd backend
+          ./mvnw clean test
+
+  build:
+    runs-on: self-hosted
+    name: Build backend
+    needs: [ unit-tests ]
+    steps:
+      - name: Checkout code
+        uses: actions/checkout@v4
+        with:
+          fetch-depth: 0
+
+      - name: Setup JDK
+        uses: actions/setup-java@v4
+        with:
+          java-version: 17
+          distribution: 'corretto'
+
+      - name: Build backend
+        run: |
+          cd book-network
+          ./mvnw clean package
+
+  build-image:
+    name: Build Docker Image
+    runs-on: self-hosted
+    needs: [ build ]
+    steps:
+      - name: Checkout code
+        uses: actions/checkout@v4
+        with:
+          fetch-depth: 0
+
+      - name: Setup JDK
+        uses: actions/setup-java@v4
+        with:
+          java-version: 17
+          distribution: 'corretto'
+
+      - name: Build backend
+        run: |
+          cd backend
+          ./mvnw clean package
+
+      - name: Login to DockerHub
+        uses: docker/login-action@v3
+        with:
+          username: ${{ secrets.DOCKERHUB_USERNAME }}
+          password: ${{ secrets.DOCKERHUB_TOKEN }}
+
+      - name: Build & Push to DockerHub
+        uses: docker/build-push-action@v5
+        with:
+          context: book-network
+          file: docker/backend/Dockerfile
+          push: true
+          platforms: linux/amd64
+          tags: ${{ secrets.DOCKERHUB_USERNAME }}/asset-management-be:1.0.0
+
+  stop-test-db:
+    runs-on: self-hosted
+    needs: [ build-image ]
+    steps:
+      - name: Stop and remove PostgreSQL Docker container
+        run: |
+          docker stop postgres-test
+          docker rm postgres-test
+
+  deploy:
+    name: Deploy Backend
+    runs-on: self-hosted
+    needs: [ stop-test-db ]
+    steps:
+
+      - name: Create deployment folder
+        run: "mkdir -p ci-cd"
+
+      - name: Copy docker-compose file
+        run: scp -oStrictHostKeyChecking=no docker-compose.yml ci-cd/docker-compose.yml
+
+      - name: Set ENV variable and deploy
+        run: |
+          cd ci-cd
+          docker-compose up -d
