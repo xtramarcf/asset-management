@@ -30,7 +30,6 @@ jobs:
 
       - name: Compile project
         run: |
-          cd backend
           ./mvnw clean compile
 
   start-test-db:
