@@ -8,7 +8,6 @@ RUN mvn clean package -DskipTests
 
 # Runtime stage
 FROM amazoncorretto:17
-ARG PROFILE=dev
 ARG APP_VERSION=1.0.0
 
 WORKDIR /app
@@ -17,7 +16,6 @@ COPY --from=build /build/target/book-network-*.jar /app/
 EXPOSE 8088
 
 ENV DB_URL=jdbc:postgresql://database:5432/postgres
-ENV ACTIVE_PROFILE=${PROFILE}
 ENV JAR_VERSION=${APP_VERSION}
 
-CMD java -jar -Dspring.profiles.active=${ACTIVE_PROFILE} -Dspring.datasource.url=${DB_URL} book-network-${JAR_VERSION}.jar
+CMD java -jar -Dspring.datasource.url=${DB_URL} book-network-${JAR_VERSION}.jar
