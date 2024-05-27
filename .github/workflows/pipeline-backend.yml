@@ -72,7 +72,11 @@ jobs:
         run: |
           cd backend
           sudo chmod +x mvnw
-          ./mvnw clean test
+          ./mvnw clean test \
+          -Dspring.datasource.username=${{ secrets.DB_USERNAME }}
+          -Dspring.datasource.password=${{ secrets.DB_PASSWORD }}
+          -Dapplication.security.jwt.secret-key=${{ secrets.JWT }}
+          -Dkey.admin-password=${{ secrets.ADMIN_PASSWORD }}
 
   build:
     runs-on: self-hosted
