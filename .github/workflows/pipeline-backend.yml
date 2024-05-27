@@ -45,8 +45,8 @@ jobs:
           docker rm postgres-test || true
           docker run -d \
             --name postgres-test \
-            -e POSTGRES_USER=username \
-            -e POSTGRES_PASSWORD=password \
+            -e POSTGRES_USER=${{ secrets.DB_USERNAME }} \
+            -e POSTGRES_PASSWORD=${{ secrets.DB_PASSWORD }} \
             -e POSTGRES_DB=postgres-test \
             -p 5432:5432 \
             --restart unless-stopped \
