@@ -54,7 +54,7 @@ jobs:
   unit-tests:
     runs-on: self-hosted
     name: Unit tests
-    needs: [ start-test-process ]
+    needs: [ start-test-db ]
     steps:
       - name: Checkout code
         uses: actions/checkout@v4
