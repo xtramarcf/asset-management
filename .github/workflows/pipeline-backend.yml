@@ -31,6 +31,7 @@ jobs:
       - name: Compile project
         run: |
           cd backend
+          sudo chmod +x mvnw
           ./mvnw clean compile
 
   start-test-db:
