@@ -2,25 +2,22 @@ spring:
   application:
     name: asset_management
 ---
-# adding profile with db credentials and jwt secret
 spring:
   profiles:
     include: secrets
 ---
-# time for the validity of jwt tokens can be set here
 application:
   security:
     jwt:
-      secret-key: ${JWT}
+      secret-key: 404E635266556A586E3272357538782F413F4428472B4B6250645367566B5970
       expiration: 1800000 # 30 minutes
 ---
-# datasource configs
 spring:
   datasource:
-    driver-class-name: org.postgresql.Driver
     url: jdbc:postgresql://localhost:5432/postgres-test
-    username: ${DB_USERNAME}
-    password: ${DB_PASSWORD}
+    username: username
+    password: password
+    driver-class-name: org.postgresql.Driver
   jpa:
     hibernate:
       ddl-auto: create-drop
@@ -36,11 +33,10 @@ spring:
     banner-mode: off
     log-startup-info: false
 ---
-# max size of 25MB for uploading files
 spring:
   servlet:
     multipart:
       max-file-size: 25MB
 ---
 key:
-  admin-password: ${ADMIN_PASSWORD}
+  admin-password: password1234

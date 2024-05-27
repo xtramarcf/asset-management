@@ -17,7 +17,7 @@ services:
       - SPRING_DATASOURCE_URL=jdbc:postgresql://database:5432/postgres
       - SPRING_DATASOURCE_USERNAME=username
       - SPRING_DATASOURCE_PASSWORD=password
-      - KEY_ADMIN-PASSWORD=password123456
+      - KEY_ADMIN-PASSWORD=password1234
     ports:
       - "8080:8080"
 

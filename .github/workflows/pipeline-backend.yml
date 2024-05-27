@@ -45,8 +45,8 @@ jobs:
           docker rm postgres-test || true
           docker run -d \
             --name postgres-test \
-            -e POSTGRES_USER=${{ secrets.DB_USERNAME }} \
-            -e POSTGRES_PASSWORD=${{ secrets.DB_PASSWORD }} \
+            -e POSTGRES_USER=username \
+            -e POSTGRES_PASSWORD=password \
             -e POSTGRES_DB=postgres-test \
             -p 5432:5432 \
             --restart unless-stopped \
@@ -73,10 +73,6 @@ jobs:
           cd backend
           sudo chmod +x mvnw
           ./mvnw clean test \
-          -Dspring.datasource.username=${{ secrets.DB_USERNAME }}
-          -Dspring.datasource.password=${{ secrets.DB_PASSWORD }}
-          -Dapplication.security.jwt.secret-key=${{ secrets.JWT }}
-          -Dkey.admin-password=${{ secrets.ADMIN_PASSWORD }}
 
   build:
     runs-on: self-hosted
