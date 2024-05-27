@@ -33,7 +33,7 @@ jobs:
           cd backend
           ./mvnw clean compile
 
-  start-test-process:
+  start-test-db:
     runs-on: self-hosted
     name: Start test db
     steps:
@@ -54,7 +54,7 @@ jobs:
   unit-tests:
     runs-on: self-hosted
     name: Unit tests
-    needs: [ start-test-process ]
+    needs: [ start-test-db, compile ]
     steps:
       - name: Checkout code
         uses: actions/checkout@v4

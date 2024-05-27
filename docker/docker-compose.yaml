@@ -1,30 +1,32 @@
 version: '3.9'
 services:
   database:
+    container_name: database
     image: postgres
     environment:
-      - POSTGRES_PASSWORD=CXtkhXw96xMQm8
-      - POSTGRES_USER=postgres
-      - POSTGRES_DB=postgres
-    container_name: database
+      POSTGRES_USER: username
+      POSTGRES_PASSWORD: password
+      POSTGRES_DB: postgres
 
   backend:
+    container_name: backend
     image: xtramarcf/asset-management-be:1.0.0
     depends_on:
       - database
     environment:
       - SPRING_DATASOURCE_URL=jdbc:postgresql://database:5432/postgres
-      - SPRING_DATASOURCE_USERNAME=postgres
-      - SPRING_DATASOURCE_PASSWORD=CXtkhXw96xMQm8
+      - SPRING_DATASOURCE_USERNAME=username
+      - SPRING_DATASOURCE_PASSWORD=password
       - KEY_ADMIN-PASSWORD=password123456
     ports:
       - "8080:8080"
-    container_name: backend
+
 
 #  frontend:
+#    container_name: frontend
 #    image: xtramarcf/asset_management-fe:1.0.0
 #    depends_on:
 #      - backend
 #    ports:
 #      - "4200:4200"
-#    container_name: frontend
+
