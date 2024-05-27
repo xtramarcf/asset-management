@@ -18,11 +18,14 @@ jobs:
     name: Compile project
     steps:
       - name: Login to DockerHub
-        uses: docker/login-action@v3
-        with:
-          registry: https://hub.docker.com/
-          username: ${{ secrets.DOCKERHUB_USERNAME }}
-          password: ${{ secrets.DOCKERHUB_TOKEN }}
+        run: |
+          sudo chmod 666 /var/run/docker.sock
+          docker login --username ${{ secrets.DOCKERHUB_USERNAME }} --password ${{ secrets.DOCKERHUB_TOKEN }}
+#        uses: docker/login-action@v3
+#        with:
+#          registry: https://hub.docker.com/
+#          username: ${{ secrets.DOCKERHUB_USERNAME }}
+#          password: ${{ secrets.DOCKERHUB_TOKEN }}
 
       - name: Checkout code
         uses: actions/checkout@v4
@@ -47,7 +50,6 @@ jobs:
     steps:
       - name: Run PostgreSQL Docker container
         run: |
-          sudo chmod 666 /var/run/docker.sock
           docker stop postgres-test || true
           docker rm postgres-test || true
           docker run -d \
