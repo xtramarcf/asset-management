@@ -7,7 +7,6 @@ services:
       POSTGRES_USER: username
       POSTGRES_PASSWORD: password
       POSTGRES_DB: postgres
-
   backend:
     container_name: backend
     image: xtramarcf/asset-management-be:latest
