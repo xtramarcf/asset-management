@@ -137,7 +137,7 @@ jobs:
     needs: [ stop-test-db ]
     steps:
 
-      - name: Set ENV variable and deploy
+      - name: Deploy
         run: |
           cd asset-management/asset-management/docker
           docker-compose up -d
