@@ -1,0 +1,43 @@
+name: Pipeline frontend
+
+#Trigger
+on:
+  push:
+    branches:
+      - master
+    paths:
+      - frontend/**
+      - docker/frontend/**
+      - 'docker-compose.yml'
+      - .github/workflows/*-frontend.yml
+
+jobs:
+  build-image:
+    name: Build FE Docker image
+    runs-on: self-hosted
+    steps:
+      - name: Checkout code
+        uses: actions/checkout@v4
+        with:
+          fetch-depth: 0
+
+
+      - name: Build & Push to DockerHub
+        uses: docker/build-push-action@v5
+        with:
+          context: frontend
+          file: docker/frontend/Dockerfile
+          push: false
+          platforms: linux/amd64
+          tags: ${{ secrets.DOCKERHUB_USERNAME }}/asset-management-fe:latest
+
+  deploy:
+    name: Deploy Frontend
+    runs-on: self-hosted
+    needs: [ build-image ]
+    steps:
+      - name: Deploy
+        run: |
+          cd ../../asset-management/asset-management/docker
+          docker-compose up -d
+          

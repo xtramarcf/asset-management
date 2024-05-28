@@ -24,7 +24,7 @@ services:
 
 #  frontend:
 #    container_name: frontend
-#    image: xtramarcf/asset_management-fe:latest
+#    image: xtramarcf/asset-management-fe:latest
 #    depends_on:
 #      - backend
 #    ports:
