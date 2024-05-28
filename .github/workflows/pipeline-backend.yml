@@ -38,11 +38,11 @@ jobs:
       #        with:
       #          fetch-depth: 0
       #
-      #      - name: Setup JDK
-      #        uses: actions/setup-java@v4
-      #        with:
-      #          java-version: 17
-      #          distribution: 'corretto'
+      - name: Setup JDK
+        uses: actions/setup-java@v4
+        with:
+          java-version: 17
+          distribution: 'corretto'
 
       - name: Compile project
         run: |
@@ -79,11 +79,11 @@ jobs:
       #        with:
       #          fetch-depth: 0
       #
-      #      - name: Setup JDK
-      #        uses: actions/setup-java@v4
-      #        with:
-      #          java-version: 17
-      #          distribution: 'corretto'
+      - name: Setup JDK
+        uses: actions/setup-java@v4
+        with:
+          java-version: 17
+          distribution: 'corretto'
 
       - name: Running unit Tests
         run: |
@@ -101,11 +101,11 @@ jobs:
       #        with:
       #          fetch-depth: 0
       #
-      #      - name: Setup JDK
-      #        uses: actions/setup-java@v4
-      #        with:
-      #          java-version: 17
-      #          distribution: 'corretto'
+      - name: Setup JDK
+        uses: actions/setup-java@v4
+        with:
+          java-version: 17
+          distribution: 'corretto'
 
       - name: Build backend
         run: |
