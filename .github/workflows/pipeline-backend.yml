@@ -17,9 +17,6 @@ jobs:
     runs-on: self-hosted
     name: Checkout project and setup java
     steps:
-      - name: testdir
-        run: |
-          cd ../../asset-management/asset-management/docker
 
       - name: Checkout code
         uses: actions/checkout@v4
@@ -120,7 +117,7 @@ jobs:
           context: backend
           file: docker/backend/Dockerfile
           push: false
-          tags: ${{ secrets.DOCKERHUB_USERNAME }}/asset-management-be:1.0.0
+          tags: ${{ secrets.DOCKERHUB_USERNAME }}/asset-management-be:latest
 
   stop-test-db:
     runs-on: self-hosted
@@ -139,5 +136,5 @@ jobs:
 
       - name: Deploy
         run: |
-          cd asset-management/asset-management/docker
+          cd ../../asset-management/asset-management/docker
           docker-compose up -d

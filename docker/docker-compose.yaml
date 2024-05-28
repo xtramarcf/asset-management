@@ -10,7 +10,7 @@ services:
 
   backend:
     container_name: backend
-    image: xtramarcf/asset-management-be:1.0.0
+    image: xtramarcf/asset-management-be:latest
     depends_on:
       - database
     environment:
@@ -24,7 +24,7 @@ services:
 
 #  frontend:
 #    container_name: frontend
-#    image: xtramarcf/asset_management-fe:1.0.0
+#    image: xtramarcf/asset_management-fe:latest
 #    depends_on:
 #      - backend
 #    ports:
