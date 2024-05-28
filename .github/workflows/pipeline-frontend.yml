@@ -28,7 +28,7 @@ jobs:
           file: docker/frontend/Dockerfile
           push: false
           platforms: linux/amd64
-          tags: ${{ secrets.DOCKERHUB_USERNAME }}/asset-management-fe:latest
+          tags: xtramarcf/asset-management-fe:latest
 
   deploy:
     name: Deploy Frontend
