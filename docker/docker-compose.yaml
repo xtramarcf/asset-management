@@ -1,4 +1,3 @@
-version: '3.9'
 services:
   database:
     container_name: database
@@ -21,11 +20,11 @@ services:
       - "8080:8080"
 
 
-#  frontend:
-#    container_name: frontend
-#    image: xtramarcf/asset-management-fe:latest
-#    depends_on:
-#      - backend
-#    ports:
-#      - "4200:4200"
+  frontend:
+    container_name: frontend
+    image: xtramarcf/asset-management-fe:latest
+    depends_on:
+      - backend
+    ports:
+      - "4200:4200"
 
