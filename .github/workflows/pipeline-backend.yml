@@ -19,7 +19,7 @@ jobs:
     steps:
       - name: testdir
         run: |
-          cd asset-management/asset-management/docker
+          cd ../../asset-management/asset-management/docker
 
       - name: Checkout code
         uses: actions/checkout@v4
