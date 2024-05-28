@@ -11,7 +11,7 @@ FROM amazoncorretto:17
 ARG APP_VERSION=1.0.0
 
 WORKDIR /app
-COPY --from=build /build/target/backend-*.jar /app/
+COPY --from=build /build/target/asset_management-*.jar /app/
 
 EXPOSE 8088
 
