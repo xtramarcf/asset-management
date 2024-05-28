@@ -1,6 +1,5 @@
 name: Pipeline frontend
 
-#Trigger
 on:
   push:
     branches:
@@ -39,5 +38,6 @@ jobs:
       - name: Deploy
         run: |
           cd ../../asset-management/asset-management/docker
+          docker-compose pull
           docker-compose up -d
           
