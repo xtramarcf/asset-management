@@ -17,12 +17,9 @@ jobs:
     runs-on: self-hosted
     name: Checkout project and setup java
     steps:
-#      - name: Login to DockerHub
-#        uses: docker/login-action@v3
-#        with:
-#          registry: "https://hub.docker.com/"
-#          username: ${{ secrets.DOCKERHUB_USERNAME }}
-#          password: ${{ secrets.DOCKERHUB_TOKEN }}
+      - name: testdir
+        run: |
+          cd asset-management/asset-management/docker
 
       - name: Checkout code
         uses: actions/checkout@v4
@@ -140,13 +137,7 @@ jobs:
     needs: [ stop-test-db ]
     steps:
 
-      - name: Create deployment folder
-        run: "mkdir -p ci-cd"
-
-      - name: Copy docker-compose file
-        run: scp -oStrictHostKeyChecking=no docker-compose.yml ci-cd/docker-compose.yml
-
       - name: Set ENV variable and deploy
         run: |
-          cd ci-cd
+          cd asset-management/asset-management/docker
           docker-compose up -d
