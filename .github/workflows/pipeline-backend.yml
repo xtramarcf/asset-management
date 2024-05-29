@@ -65,9 +65,9 @@ jobs:
             --restart unless-stopped \
             postgres
 
-  unit-tests:
+  tests:
     runs-on: self-hosted
-    name: Unit tests
+    name: Unit tests & Code quality check
     needs: [ start-test-db, compile ]
     steps:
       - name: Setup JDK
@@ -81,6 +81,12 @@ jobs:
           cd backend
           sudo chmod +x mvnw
           ./mvnw clean test 
+
+      - name: Running Code quality check
+        run: |
+          cd backend
+          sudo chmod +x mvnw
+          ./mvnw checkstyle:check
 
   build:
     runs-on: self-hosted
