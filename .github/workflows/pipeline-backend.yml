@@ -15,7 +15,7 @@ on:
 jobs:
   checkout-setup:
     runs-on: self-hosted
-    name: Checkout project and setup java
+    name: Checkout project
     steps:
 
       - name: Checkout code
