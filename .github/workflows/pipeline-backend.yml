@@ -97,7 +97,13 @@ jobs:
         run: |
           cd backend
           sudo chmod +x mvnw
-          ./mvnw clean package -DskipTests
+          ./mvnw clean package
+
+      - name: Verify Package
+        run: |
+          cd backend
+          sudo chmod +x mvnw
+          ./mvnw verify
 
   build-image:
     name: Build Docker Image
