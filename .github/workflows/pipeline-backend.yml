@@ -4,6 +4,7 @@ on:
   push:
     branches:
       - master
+      - dev
     paths:
       - backend/**
       - docker/backend/**
@@ -36,7 +37,6 @@ jobs:
       - name: Compile project
         run: |
           cd backend
-          sudo chmod +x mvnw
           ./mvnw clean compile
 
   start-test-db:
@@ -46,21 +46,19 @@ jobs:
     steps:
       - name: Run PostgreSQL Docker container
         run: |
-          sudo chmod 666 /var/run/docker.sock
-          docker stop postgres-test || true
-          docker rm postgres-test || true
-          docker run -d \
-            --name postgres-test \
-            -e POSTGRES_USER=username \
-            -e POSTGRES_PASSWORD=password \
-            -e POSTGRES_DB=postgres-test \
-            -p 5432:5432 \
-            --restart unless-stopped \
-            postgres
+          docker ps -q --filter "name=postgres-test" | ForEach-Object {docker stop $_; docker rm $_}
+          docker run -d `
+          --name postgres-test `
+          -e POSTGRES_USER=username `
+          -e POSTGRES_PASSWORD=password `
+          -e POSTGRES_DB=postgres-test `
+          -p 5432:5432 `
+          --restart unless-stopped `
+          postgres
 
   tests:
     runs-on: self-hosted
-    name: Unit tests & Code quality check
+    name: Unit tests
     needs: [ start-test-db, compile ]
     steps:
       - name: Setup JDK
@@ -72,14 +70,8 @@ jobs:
       - name: Running unit Tests
         run: |
           cd backend
-          sudo chmod +x mvnw
           ./mvnw clean test 
 
-      - name: Running Code quality check
-        run: |
-          cd backend
-          sudo chmod +x mvnw
-          ./mvnw checkstyle:check || true
 
   build:
     runs-on: self-hosted
@@ -95,13 +87,11 @@ jobs:
       - name: Build backend
         run: |
           cd backend
-          sudo chmod +x mvnw
           ./mvnw clean package
 
       - name: Verify Package
         run: |
           cd backend
-          sudo chmod +x mvnw
           ./mvnw verify
 
   build-image:
