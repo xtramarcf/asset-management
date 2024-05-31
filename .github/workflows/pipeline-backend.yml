@@ -43,7 +43,7 @@ jobs:
   start-test-db:
     runs-on: self-hosted
     name: Start test db
-    needs: [ checkout-setup ]
+    needs: [ checkout ]
     steps:
       - name: Run PostgreSQL Docker container
         run: |
@@ -115,7 +115,7 @@ jobs:
         with:
           username: ${{ secrets.DOCKERHUB_USERNAME }}
           password: ${{ secrets.DOCKERHUB_TOKEN }}
-        
+
       - name: Build & Push to DockerHub
         uses: docker/build-push-action@v5
         with:
