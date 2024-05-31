@@ -3,8 +3,8 @@ services:
     container_name: database
     image: postgres
     environment:
-      POSTGRES_USER: username
-      POSTGRES_PASSWORD: password
+      POSTGRES_USER: ${DB-USERNAME}
+      POSTGRES_PASSWORD: ${DB-PASSWORD}
       POSTGRES_DB: postgres
   backend:
     container_name: backend
@@ -12,10 +12,11 @@ services:
     depends_on:
       - database
     environment:
-      - SPRING_DATASOURCE_URL=jdbc:postgresql://database:5432/postgres
-      - SPRING_DATASOURCE_USERNAME=username
-      - SPRING_DATASOURCE_PASSWORD=password
-      - KEY_ADMIN-PASSWORD=password1234
+      SPRING_DATASOURCE_URL: jdbc:postgresql://database:5432/postgres
+      SPRING_DATASOURCE_USERNAME: ${DB-USERNAME}
+      SPRING_DATASOURCE_PASSWORD: ${DB-PASSWORD}
+      KEY_ADMIN-PASSWORD: ${ADMIN-PASSWORD}
+      APPLICATION_SECURITY_JWT_SECRET-KEY: ${JWT}
     ports:
       - "8080:8080"
   frontend:

@@ -127,6 +127,11 @@ jobs:
     name: Deploy Backend
     runs-on: self-hosted
     needs: [ stop-test-db ]
+    env:
+      DB_USERNAME: ${{ secrets.DB_USERNAME }}
+      DB_PASSWORD: ${{ secrets.DB_PASSWORD }}
+      ADMIN_PASSWORD: ${{ secrets.ADMIN_PASSWORD }}
+      JWT_SECRET_KEY: ${{ secrets.JWT_SECRET_KEY }}
     steps:
 
       - name: Deploy

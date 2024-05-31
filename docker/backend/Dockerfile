@@ -15,7 +15,6 @@ COPY --from=build /build/target/asset_management-*.jar /app/
 
 EXPOSE 8080
 
-ENV DB_URL=jdbc:postgresql://database:5432/postgres
 ENV JAR_VERSION=${APP_VERSION}
 
-CMD java -jar -Dspring.datasource.url=${DB_URL} asset_management-${JAR_VERSION}.jar
+CMD java -jar asset_management-${JAR_VERSION}.jar
