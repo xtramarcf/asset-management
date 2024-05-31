@@ -13,7 +13,7 @@ ARG APP_VERSION=1.0.0
 WORKDIR /app
 COPY --from=build /build/target/asset_management-*.jar /app/
 
-EXPOSE 8088
+EXPOSE 8080
 
 ENV DB_URL=jdbc:postgresql://database:5432/postgres
 ENV JAR_VERSION=${APP_VERSION}
