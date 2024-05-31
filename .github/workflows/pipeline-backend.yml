@@ -1,6 +1,5 @@
 name: Pipeline backend
 
-#Trigg
 on:
   push:
     branches:
