@@ -18,8 +18,6 @@ services:
       - KEY_ADMIN-PASSWORD=password1234
     ports:
       - "8080:8080"
-
-
   frontend:
     container_name: frontend
     image: xtramarcf/asset-management-fe:latest
