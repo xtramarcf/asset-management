@@ -32,7 +32,7 @@ jobs:
         uses: actions/setup-java@v4
         with:
           java-version: 17
-          distribution: 'corretto'
+          distribution: 'adopt'
 
       - name: Compile project
         run: |
@@ -65,7 +65,7 @@ jobs:
         uses: actions/setup-java@v4
         with:
           java-version: 17
-          distribution: 'corretto'
+          distribution: 'adopt'
 
       - name: Running unit Tests
         run: |
@@ -82,7 +82,7 @@ jobs:
         uses: actions/setup-java@v4
         with:
           java-version: 17
-          distribution: 'corretto'
+          distribution: 'adopt'
 
       - name: Build backend
         run: |
