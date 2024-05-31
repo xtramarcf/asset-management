@@ -1,6 +1,6 @@
 name: Pipeline frontend
 
-#Trigge
+#Trigger
 on:
   push:
     branches:
