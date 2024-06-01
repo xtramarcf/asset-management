@@ -132,6 +132,7 @@ public class IamService {
                 .build();
 
         System.out.println(adminPassword);
+
         iamRepository.save(user);
     }
 }
