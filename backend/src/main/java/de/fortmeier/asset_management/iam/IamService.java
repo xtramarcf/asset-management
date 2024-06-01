@@ -60,7 +60,7 @@ public class IamService {
     }
 
     public List<UserProjection> findAll() {
-        return iamRepository.findAllSimpleUser();
+        return iamRepository.findAllBy();
     }
 
 
