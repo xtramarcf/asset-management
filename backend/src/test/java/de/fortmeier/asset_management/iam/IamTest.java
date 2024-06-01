@@ -6,7 +6,7 @@ import com.fasterxml.jackson.databind.ObjectMapper;
 import de.fortmeier.asset_management.iam.requests.AuthRequest;
 import de.fortmeier.asset_management.iam.requests.AuthResponse;
 import de.fortmeier.asset_management.iam.requests.RegistrationRequest;
-import de.fortmeier.asset_management.iam.requests.UserDto;
+import de.fortmeier.asset_management.iam.requests.UserProjection;
 import de.fortmeier.asset_management.iam.types.Role;
 import org.junit.jupiter.api.*;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -110,10 +110,10 @@ class IamTest {
 
             MvcResult result = resultActions.andReturn();
             String contentAsString = result.getResponse().getContentAsString();
-            List<UserDto> userDtoList = objectMapper.readValue(contentAsString, new TypeReference<List<UserDto>>() {
+            List<UserProjection> userProjectionList = objectMapper.readValue(contentAsString, new TypeReference<List<UserProjection>>() {
             });
 
-            Assertions.assertEquals(2, userDtoList.size());
+            Assertions.assertEquals(2, userProjectionList.size());
 
         } catch (Exception e) {
             Assertions.fail(e);

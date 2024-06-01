@@ -1,9 +1,6 @@
 package de.fortmeier.asset_management.iam;
 
-import de.fortmeier.asset_management.iam.requests.AuthRequest;
-import de.fortmeier.asset_management.iam.requests.AuthResponse;
-import de.fortmeier.asset_management.iam.requests.RegistrationRequest;
-import de.fortmeier.asset_management.iam.requests.UserDto;
+import de.fortmeier.asset_management.iam.requests.*;
 import jakarta.validation.Valid;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.HttpStatus;
@@ -14,7 +11,6 @@ import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.annotation.*;
 
-import java.util.ArrayList;
 import java.util.List;
 
 /**
@@ -33,22 +29,11 @@ public class IamController {
      * @return the Response Entity with the status code and all found user in its body.
      */
     @GetMapping("/get-all-user")
-    public ResponseEntity<List<UserDto>> getAllUser() {
-        List<User> users = iamService.findAll();
-        List<UserDto> userDtoList = new ArrayList<>();
+    public ResponseEntity<List<UserProjection>> getAllUser() {
 
-        for (User user : users) {
-            userDtoList.add(
-                    new UserDto(
-                            user.getFirstName(),
-                            user.getLastName(),
-                            user.getUsername(),
-                            user.isEnabled()
-                    )
-            );
-        }
+        List<UserProjection> users = iamService.findAll();
 
-        return ResponseEntity.ok(userDtoList);
+        return ResponseEntity.ok(users);
     }
 
     /**
@@ -72,6 +57,7 @@ public class IamController {
 
     /**
      * Deletes a user by the userName.
+     *
      * @param userName Name of the user, which will be deleted.
      * @return a Response Entity with the status code.
      */
@@ -92,6 +78,7 @@ public class IamController {
 
     /**
      * Method for authenticating users.
+     *
      * @param request object with user credentials
      * @return the response object with jwt token.
      */
@@ -121,8 +108,9 @@ public class IamController {
 
     /**
      * Method for register as a user.
+     *
      * @param request with users credentials
-     * @param result BindingResult from spring validation for validating the request.
+     * @param result  BindingResult from spring validation for validating the request.
      * @return a ResponseEntity with the http status.
      */
     @PostMapping("/register")

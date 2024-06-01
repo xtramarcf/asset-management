@@ -4,6 +4,7 @@ import de.fortmeier.asset_management.iam.config.JwtService;
 import de.fortmeier.asset_management.iam.requests.AuthRequest;
 import de.fortmeier.asset_management.iam.requests.AuthResponse;
 import de.fortmeier.asset_management.iam.requests.RegistrationRequest;
+import de.fortmeier.asset_management.iam.requests.UserProjection;
 import de.fortmeier.asset_management.iam.types.Role;
 import lombok.RequiredArgsConstructor;
 import org.springframework.beans.factory.annotation.Value;
@@ -58,8 +59,8 @@ public class IamService {
         iamRepository.save(user);
     }
 
-    public List<User> findAll() {
-        return iamRepository.findAll();
+    public List<UserProjection> findAll() {
+        return iamRepository.findAllSimpleUser();
     }
 
 
