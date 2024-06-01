@@ -32,6 +32,8 @@ public class IamService {
     @Value("${key.admin-password}")
     String adminPassword;
 
+    private static final String ADMIN = "Admin";
+
 
     public Optional<User> findByUserName(String username) {
         return iamRepository.findByUserName(username);
@@ -63,6 +65,7 @@ public class IamService {
 
     /**
      * Authentication method, that proofs if the user exists and if the user is enabled.
+     *
      * @param request with user credentials.
      * @return the response object, which includes the jwt.
      */
@@ -87,13 +90,12 @@ public class IamService {
     }
 
 
-
-
     /**
      * Registers a user by the given user credentials.
      *
      * @param request contains the user credentials.
      */
+    @Transactional
     public void register(RegistrationRequest request) {
 
         if (findByUserName(request.getUserName()).isPresent()) {
@@ -108,26 +110,28 @@ public class IamService {
                 .password(encoder.encode(request.getPassword()))
                 .build();
 
-        save(user);
+        iamRepository.save(user);
     }
 
 
     /**
      * Registers the admin-user, if the user does not exist.
      */
+    @Transactional
     public void registerAdmin() {
 
-        if (findByUserName("Admin").isPresent()) return;
+        if (findByUserName(ADMIN).isPresent()) return;
 
         User user = User.builder()
-                .userName("Admin")
-                .lastName("Admin")
-                .firstName("Admin")
+                .userName(ADMIN)
+                .lastName(ADMIN)
+                .firstName(ADMIN)
                 .role(Role.ADMIN)
                 .password(encoder.encode(adminPassword))
                 .enabled(true)
                 .build();
 
-        save(user);
+        System.out.println(adminPassword);
+        iamRepository.save(user);
     }
 }
