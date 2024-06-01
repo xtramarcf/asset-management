@@ -29,9 +29,9 @@ public class IamController {
      * @return the Response Entity with the status code and all found user in its body.
      */
     @GetMapping("/get-all-user")
-    public ResponseEntity<List<UserProjection>> getAllUser() {
+    public ResponseEntity<List<UserDto>> getAllUser() {
 
-        List<UserProjection> users = iamService.findAll();
+        List<UserDto> users = iamService.findAll();
 
         return ResponseEntity.ok(users);
     }

@@ -1,10 +1,7 @@
 package de.fortmeier.asset_management.iam;
 
 import de.fortmeier.asset_management.iam.config.JwtService;
-import de.fortmeier.asset_management.iam.requests.AuthRequest;
-import de.fortmeier.asset_management.iam.requests.AuthResponse;
-import de.fortmeier.asset_management.iam.requests.RegistrationRequest;
-import de.fortmeier.asset_management.iam.requests.UserProjection;
+import de.fortmeier.asset_management.iam.requests.*;
 import de.fortmeier.asset_management.iam.types.Role;
 import lombok.RequiredArgsConstructor;
 import org.springframework.beans.factory.annotation.Value;
@@ -14,6 +11,7 @@ import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
+import java.util.ArrayList;
 import java.util.List;
 import java.util.Optional;
 
@@ -59,8 +57,20 @@ public class IamService {
         iamRepository.save(user);
     }
 
-    public List<UserProjection> findAll() {
-        return iamRepository.findAllBy();
+    public List<UserDto> findAll() {
+        List<UserProjection> userProjections = iamRepository.findAllBy();
+        List<UserDto> userDtos = new ArrayList<>();
+
+        for (UserProjection userProjection : userProjections) {
+            UserDto userDto = new UserDto(
+                    userProjection.getFirstName(),
+                    userProjection.getLastName(),
+                    userProjection.getUserName(),
+                    userProjection.getEnabled()
+            );
+            userDtos.add(userDto);
+        }
+        return userDtos;
     }
 
 
