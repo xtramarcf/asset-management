@@ -1,8 +1,9 @@
 package de.fortmeier.asset_management.iam.requests;
 
-public interface UserProjection {
-    String getFirstName();
-    String getLastName();
-    String getUserName();
-    boolean getEnabled();
+public record UserProjection(
+        String firstName,
+        String lastName,
+        String userName,
+        boolean enabled
+) {
 }

@@ -1,6 +1,5 @@
 package de.fortmeier.asset_management.iam;
 
-import de.fortmeier.asset_management.iam.requests.UserProjection;
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.stereotype.Repository;
 
@@ -14,5 +13,6 @@ import java.util.Optional;
 public interface IamRepository extends JpaRepository<User, Integer> {
 
     Optional<User> findByUserName(String userName);
-    List<UserProjection> findAllBy();
+
+    <T> List<T> findAll(Class<T> projection);
 }

@@ -57,20 +57,9 @@ public class IamService {
         iamRepository.save(user);
     }
 
-    public List<UserDto> findAll() {
-        List<UserProjection> userProjections = iamRepository.findAllBy();
-        List<UserDto> userDtos = new ArrayList<>();
+    public List<UserProjection> findAll() {
 
-        for (UserProjection userProjection : userProjections) {
-            UserDto userDto = new UserDto(
-                    userProjection.getFirstName(),
-                    userProjection.getLastName(),
-                    userProjection.getUserName(),
-                    userProjection.getEnabled()
-            );
-            userDtos.add(userDto);
-        }
-        return userDtos;
+        return iamRepository.findAll(UserProjection.class);
     }
 
 
