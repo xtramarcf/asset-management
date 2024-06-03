@@ -30,13 +30,6 @@ public class IamService {
     @Value("${key.admin-password}")
     String adminPassword;
 
-    @Value("${spring.datasource.username}")
-    String dbUsername;
-
-    @Value("${spring.datasource.url}")
-    String dbUrl;
-
-
     private static final String ADMIN = "Admin";
 
 
@@ -136,10 +129,6 @@ public class IamService {
                 .password(encoder.encode(adminPassword))
                 .enabled(true)
                 .build();
-
-        System.out.println(adminPassword);
-        System.out.println(dbUsername);
-        System.out.println(dbUrl);
 
         iamRepository.save(user);
     }
