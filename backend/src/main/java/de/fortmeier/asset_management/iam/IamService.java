@@ -58,7 +58,7 @@ public class IamService {
 
     public List<UserProjection> findAll() {
 
-        return iamRepository.findAll(UserProjection.class);
+        return iamRepository.findBy(UserProjection.class);
     }
 
 
