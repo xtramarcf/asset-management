@@ -131,8 +131,8 @@ jobs:
     env:
       DB_USERNAME: ${{ secrets.DB_USERNAME }}
       DB_PASSWORD: ${{ secrets.DB_PASSWORD }}
-      ADMIN_PASSWORD: ${{ secrets.ADMIN_PASSWORD }}
-      JWT_SECRET_KEY: ${{ secrets.JWT }}
+      ADMIN_PW: ${{ secrets.ADMIN_PW }}
+      JWT_KEY: ${{ secrets.JWT_KEY }}
 
     steps:
       - name: Deploy
