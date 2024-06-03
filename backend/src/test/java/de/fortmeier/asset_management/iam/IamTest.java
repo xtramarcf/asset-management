@@ -107,7 +107,7 @@ class IamTest {
 
             MvcResult result = resultActions.andReturn();
             String contentAsString = result.getResponse().getContentAsString();
-            List<UserProjection> userProjections = objectMapper.readValue(contentAsString, new TypeReference<>() {
+            List<UserProjection> userProjections = objectMapper.readValue(contentAsString, new TypeReference<List<UserProjection>>() {
             });
 
             Assertions.assertEquals(2, userProjections.size());
