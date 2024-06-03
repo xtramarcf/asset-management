@@ -3,8 +3,8 @@ services:
     container_name: database
     image: postgres
     environment:
-      POSTGRES_USER: ${DB-USERNAME}
-      POSTGRES_PASSWORD: ${DB-PASSWORD}
+      POSTGRES_USER: ${DB_USERNAME}
+      POSTGRES_PASSWORD: ${DB_PASSWORD}
       POSTGRES_DB: postgres
   backend:
     container_name: backend

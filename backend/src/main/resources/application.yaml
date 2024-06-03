@@ -2,10 +2,6 @@ spring:
   application:
     name: asset_management
 ---
-spring:
-  profiles:
-    include: secrets
----
 application:
   security:
     jwt:
