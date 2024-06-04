@@ -42,11 +42,9 @@ public class Asset {
     @OneToMany(cascade = CascadeType.ALL, fetch = FetchType.EAGER)
     private List<Document> documents = new ArrayList<>();
 
-    @Column(nullable = false)
     @LastModifiedBy
     private String lastModifiedBy;
 
-    @Column(nullable = false)
     @LastModifiedDate
     private LocalDate lastModified;
 
