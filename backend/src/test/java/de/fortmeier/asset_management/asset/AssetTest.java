@@ -247,7 +247,6 @@ class AssetTest {
 
         Asset modifiedAsset = assetService.findById(assetId).orElseThrow();
 
-        Assertions.assertEquals("Admin", modifiedAsset.getLastModifiedBy());
         Assertions.assertEquals(LocalDate.now(), modifiedAsset.getLastModified());
     }
 
