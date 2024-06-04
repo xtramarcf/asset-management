@@ -6,6 +6,8 @@ import de.fortmeier.asset_management.assets.type.ItemType;
 import de.fortmeier.asset_management.assets.type.PaymentType;
 import jakarta.persistence.*;
 import lombok.*;
+import org.springframework.data.annotation.LastModifiedBy;
+import org.springframework.data.annotation.LastModifiedDate;
 
 import java.time.LocalDate;
 import java.util.ArrayList;
@@ -39,6 +41,14 @@ public class Asset {
     private LocalDate returnAt;
     @OneToMany(cascade = CascadeType.ALL, fetch = FetchType.EAGER)
     private List<Document> documents = new ArrayList<>();
+
+    @Column(nullable = false)
+    @LastModifiedBy
+    private String lastModifiedBy;
+
+    @Column(nullable = false)
+    @LastModifiedDate
+    private LocalDate lastModified;
 
     public Asset(AssetRequest assetRequest) {
 
