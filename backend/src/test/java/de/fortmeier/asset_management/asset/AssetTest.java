@@ -224,9 +224,36 @@ class AssetTest {
 
     }
 
+    @Test
+    @Order(6)
+    void auditorTest() {
+        String token = null;
+
+        try {
+            token = authenticate();
+        } catch (Exception e) {
+            Assertions.fail(e);
+        }
+
+        saveAsset(token);
+
+        Asset asset = assetService.findAll().get(0);
+
+        asset.setOwner("John");
+
+        int assetId = asset.getId();
+
+        assetService.saveAsset(asset);
+
+        Asset modifiedAsset = assetService.findById(assetId).orElseThrow();
+
+        Assertions.assertEquals("Admin", modifiedAsset.getLastModifiedBy());
+        Assertions.assertEquals(LocalDate.now(), modifiedAsset.getLastModified());
+    }
 
     /**
      * Saves asset by request.
+     *
      * @param token jwt token for authorization.
      */
     void saveAsset(String token) {
