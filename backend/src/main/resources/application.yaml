@@ -1,18 +1,9 @@
 spring:
   application:
     name: asset_management
----
-application:
-  security:
-    jwt:
-      secret-key: 404E635266556A586E3272357538782F413F4428472B4B6250645367566B5970
-      expiration: 1800000 # 30 minutes
----
-spring:
+  profiles:
+    include: test-database
   datasource:
-    url: jdbc:postgresql://localhost:5432/postgres-test
-    username: username
-    password: password
     driver-class-name: org.postgresql.Driver
   jpa:
     hibernate:
@@ -23,16 +14,18 @@ spring:
         format_sql: true
     database: postgresql
     database-platform: org.hibernate.dialect.PostgreSQLDialect
----
-spring:
-  main:
-    banner-mode: off
-    log-startup-info: false
----
-spring:
   servlet:
     multipart:
       max-file-size: 25MB
----
+  main:
+    banner-mode: off
+    log-startup-info: false
+  flyway:
+    baseline-on-migrate: true
+application:
+  security:
+    jwt:
+      secret-key: 404E635266556A586E3272357538782F413F4428472B4B6250645367566B5970
+      expiration: 1800000 # 30 minutes
 key:
   admin-password: password1234

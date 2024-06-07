@@ -11,6 +11,7 @@ import org.springframework.data.annotation.LastModifiedDate;
 import org.springframework.data.jpa.domain.support.AuditingEntityListener;
 
 import java.time.LocalDate;
+import java.time.LocalDateTime;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -44,11 +45,9 @@ public class Asset {
     @OneToMany(cascade = CascadeType.ALL, fetch = FetchType.EAGER)
     private List<Document> documents = new ArrayList<>();
 
-    @LastModifiedBy
-    private String lastModifiedBy;
-
+    @Column
     @LastModifiedDate
-    private LocalDate lastModified;
+    private LocalDateTime lastModified;
 
     public Asset(AssetRequest assetRequest) {
 
